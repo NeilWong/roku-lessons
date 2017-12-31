@@ -14,9 +14,9 @@
       itemSize="[400,48]"
     >
     <ContentNode id = "categories" role = "content" >
-      <category_node title ="DRAMA" feed_url="https://raw.githubusercontent.com/NeilWong/crash-course/master/server/roku_lessons/drama.json"/>
-      <category_node title = "COMEDY" feed_url="https://raw.githubusercontent.com/NeilWong/crash-course/master/server/roku_lessons/comedy.json"/>
-      <category_node title = "HORROR" feed_url="https://raw.githubusercontent.com/NeilWong/crash-course/master/server/roku_lessons/horror.json"/>
+      <category_node title ="DRAMA" feed_url="https://raw.githubusercontent.com/NeilWong/roku-lessons/master/RokuLessonJsonDrama.json"/>
+      <category_node title = "COMEDY" feed_url="https://raw.githubusercontent.com/NeilWong/roku-lessons/master/RokuLessonJsonComedy.json"/>
+      <category_node title = "HORROR" feed_url="https://raw.githubusercontent.com/NeilWong/roku-lessons/master/RokuLessonJsonHorror.json"/>
     </ContentNode>
     </RadioButtonList>
   </children>
