@@ -1,6 +1,13 @@
 sub init()
     m.content_grid = m.top.FindNode("content_grid")
     m.header = m.top.FindNode("header")
+	m.top.observeField("visible", "onVisibleChange")
+end sub
+
+sub onVisibleChange()
+	if m.top.visible = true then
+		m.content_grid.setFocus(true)
+	end if
 end sub
 
 sub onFeedChanged(obj)
@@ -8,7 +15,6 @@ sub onFeedChanged(obj)
     m.header.text = feed.title
     postercontent = createObject("roSGNode","ContentNode")
     for each item in feed.items
-      print item
       node = createObject("roSGNode", "ContentNode")
       node.streamformat = item.streamformat
       node.title = item.title

@@ -1,5 +1,4 @@
 sub main()
-  ?"main.brs works"
     screen = createObject("roSGScreen")
     scene = screen.createScene("home_scene")
 	  screen.Show()

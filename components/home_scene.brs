@@ -2,7 +2,11 @@ function init()
 	? "[home_scene] init"
 	m.category_screen = m.top.findNode("category_screen")
 	m.content_screen = m.top.findNode("content_screen")
+	m.details_screen = m.top.findNode("details_screen")
+
 	m.category_screen.observeField("category_selected", "onCategorySelected")
+	m.content_screen.observeField("content_selected", "onContentSelected")
+
 	m.category_screen.setFocus(true)
 end function
 
@@ -14,6 +18,15 @@ sub onCategorySelected(obj)
     ? "onCategorySelected selected ContentNode: ";list.content.getChild(obj.getData())
     item = list.content.getChild(obj.getData())
     loadFeed(item.feed_url)
+end sub
+
+sub onContentSelected(obj)
+    selected_index = obj.getData()
+    ? "content selected_index :";selected_index
+    item = m.content_screen.findNode("content_grid").content.getChild(selected_index)
+    m.details_screen.content = item
+    m.content_screen.visible = false
+    m.details_screen.visible = true
 end sub
 
 sub loadFeed(url)
@@ -34,3 +47,16 @@ sub onFeedResponse(obj)
 		? "FEED RESPONSE IS EMPTY!"
 	end if
 end sub
+
+function onKeyEvent(key, press) as Boolean
+	? "[home_scene] onKeyEvent", key, press
+	if key = "back" and press
+		if m.content_screen.visible
+			m.content_screen.visible=false
+			m.category_screen.visible=true
+			m.category_screen.setFocus(true)
+			return true
+		end if
+	end if
+  return false
+end function

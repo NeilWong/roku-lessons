@@ -1,11 +1,9 @@
 sub init()
-  ?"load_feed_task works"
   m.top.functionname = "request"
   m.top.response = ""
 end sub
 
 function request()
-  ?"load_feed_task request works"
     url = m.top.url
     http = createObject("roUrlTransfer")
     http.RetainBodyOnError(true)
