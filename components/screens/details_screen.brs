@@ -5,9 +5,11 @@ sub init()
 	m.play_button = m.top.FindNode("play_button")
 	m.top.observeField("visible", "onVisibleChange")
 	m.play_button.setFocus(true)
+  ?"details_screen init"
 end sub
 
 sub onVisibleChange()
+  ?"onVisibleChange works"
 	if m.top.visible = true then
 		m.play_button.setFocus(true)
 	end if

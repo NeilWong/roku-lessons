@@ -14,5 +14,11 @@
       id="details_screen"
       visible="false"
       translation="[0,0]" />
+    <Video
+      id="videoplayer"
+      width="1920"
+      height="1080"
+      translation="[0,0]"
+      visible="false" />
   </children>
 </component>
