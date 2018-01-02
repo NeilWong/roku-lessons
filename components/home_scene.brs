@@ -3,7 +3,9 @@ function init()
 	m.category_screen = m.top.findNode("category_screen")
 	m.content_screen = m.top.findNode("content_screen")
 	m.details_screen = m.top.findNode("details_screen")
+
 	m.videoplayer = m.top.findNode("videoplayer")
+	initializeVideoPlayer()
 
 	m.category_screen.observeField("category_selected", "onCategorySelected")
 	m.content_screen.observeField("content_selected", "onContentSelected")
@@ -28,6 +30,24 @@ sub onContentSelected(obj)
     m.details_screen.content = m.selected_media
     m.content_screen.visible = false
     m.details_screen.visible = true
+end sub
+
+sub initializeVideoPlayer()
+	m.videoplayer.EnableCookies()
+	m.videoplayer.setCertificatesFile("common:/certs/ca-bundle.crt")
+	m.videoplayer.InitClientCertificates()
+	m.videoplayer.notificationInterval=1
+	m.videoplayer.observeFieldScoped("position", "onPlayerPositionChanged")
+	m.videoplayer.observeFieldScoped("state", "onPlayerStateChanged")
+end sub
+
+sub onPlayerPositionChanged(obj)
+	? "Player Position: ", obj.getData()
+end sub
+
+sub onPlayerStateChanged(obj)
+	state=obj.getData()
+	? "onPlayerStateChanged :"; state
 end sub
 
 sub onPlayButtonPressed(obj)
