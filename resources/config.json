@@ -1,0 +1,25 @@
+{
+  "host": "https://raw.githubusercontent.com/NeilWong",
+  "categories": [
+    {
+      "title": "Drama",
+      "feed_url": "/roku-lessons/master/json/RokuLessonJsonDrama.json"
+    },
+    {
+      "title": "Comedy",
+      "feed_url": "/roku-lessons/master/json/RokuLessonJsonComedy.json"
+    },
+    {
+      "title": "Horror",
+      "feed_url": "/roku-lessons/master/json/RokuLessonJsonHorror.json"
+    },
+    {
+      "title": "Error Test",
+      "feed_url": "/broken_path"
+    },
+    {
+      "title": "Bad Data",
+      "feed_url": "/roku_lessons/bad_data.json"
+    }
+  ]
+}

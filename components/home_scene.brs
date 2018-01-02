@@ -3,7 +3,7 @@ function init()
 	m.category_screen = m.top.findNode("category_screen")
 	m.content_screen = m.top.findNode("content_screen")
 	m.details_screen = m.top.findNode("details_screen")
-
+	m.error_dialog = m.top.findNode("error_dialog")
 	m.videoplayer = m.top.findNode("videoplayer")
 	initializeVideoPlayer()
 
@@ -12,6 +12,7 @@ function init()
 	m.details_screen.observeField("play_button_pressed", "onPlayButtonPressed")
 
 	m.category_screen.setFocus(true)
+	loadConfig()
 end function
 
 sub onCategorySelected(obj)
@@ -48,6 +49,26 @@ end sub
 sub onPlayerStateChanged(obj)
 	state=obj.getData()
 	? "onPlayerStateChanged :"; state
+	if state="error"
+		?"Error Message: "; m.videoplayer.errorMSG
+		?"Error Code: ";m.videoplayer.errorCode
+		showErrorDialog(m.videoplayer.errorMSG + chr(10) + "Error Code: " + m.videoplayer.errorCode.toStr())
+	else if state="finished"
+		closeVideo()
+	end if
+end sub
+
+sub closeVideo()
+	m.videoplayer.control="stop"
+	m.videoplayer.visible=false
+	m.details_screen.visible=true
+end sub
+
+sub showErrorDialog(message)
+	m.error_dialog.title = "ERROR"
+	m.error_dialog.message = message
+	m.error_dialog.visible=true
+	m.top.dialog = m.error_dialog
 end sub
 
 sub onPlayButtonPressed(obj)
@@ -59,10 +80,11 @@ sub onPlayButtonPressed(obj)
 end sub
 
 sub loadFeed(url)
-  m.feed_task = createObject("roSGNode", "load_feed_task")
-  m.feed_task.observeField("response", "onFeedResponse")
-  m.feed_task.url = url
-  m.feed_task.control = "RUN"
+	m.feed_task = createObject("roSGNode", "load_feed_task")
+	m.feed_task.observeField("response", "onFeedResponse")
+	m.feed_task.observeField("error", "onFeedError")
+	m.feed_task.url = url
+	m.feed_task.control = "RUN"
 end sub
 
 sub onFeedResponse(obj)
@@ -75,6 +97,28 @@ sub onFeedResponse(obj)
 	else
 		? "FEED RESPONSE IS EMPTY!"
 	end if
+end sub
+
+sub onFeedError(obj)
+	?"onFeedError for feed"
+	showErrorDialog(obj.getData())
+end sub
+
+sub loadConfig()
+    m.config_task = createObject("roSGNode", "load_config_task")
+    m.config_task.observeField("error", "onConfigError")
+    m.config_task.observeField("filedata", "onConfigResponse")
+    m.config_task.filepath = "resources/config.json"
+    m.config_task.control="RUN"
+end sub
+
+sub onConfigError(obj)
+	showErrorDialog(obj.getData())
+end sub
+
+sub onConfigResponse(obj)
+    params = {config:obj.getData()}
+    m.category_screen.callFunc("updateConfig",params)
 end sub
 
 function onKeyEvent(key, press) as Boolean
